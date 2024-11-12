@@ -1,10 +1,20 @@
 <?php
 /*
-Plugin Name: Add to Cart Button Rules for WooCommerce
-Description: Adds a custom tab in the WooCommerce product edit screen to control the visibility of the Add to Cart button.
-Version: 1.0
-Author: Your Name
-Text Domain: add-to-cart-button-rules
+ * Plugin Name: Add to Cart Button Rules for WooCommerce
+ * Description: Adds a custom tab in the WooCommerce product edit screen to control the visibility of the Add to Cart button.
+ * Plugin URI:        https://tinylab.dev
+ * Version:           1.0
+ * Author:            TinyLab
+ * Author URI:        https://tinylab.dev/
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain: add-to-cart-button-rules
+ * Domain Path:       /languages
+ * Requires Plugins: woocommerce
+ * Requires at least: 6.2
+ * Tested up to: 6.6
+ * WC requires at least: 8.9
+ * WC tested up to: 9.3
 */
 
 if (!defined('ABSPATH')) {
@@ -19,6 +29,7 @@ class Add_To_Cart_Button_Rules {
         add_action('woocommerce_process_product_meta', [$this, 'save_custom_product_tab_content']);
         add_action('woocommerce_after_shop_loop_item', [$this, 'conditionally_hide_add_to_cart_button'], 10);
         add_action('woocommerce_single_product_summary', [$this, 'conditionally_hide_add_to_cart_button'], 10);
+        add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'add_custom_action_links']);
     }
     
     public function add_custom_product_tab($tabs) {
@@ -67,6 +78,14 @@ class Add_To_Cart_Button_Rules {
             }
         }
     }
+    
+	function add_custom_action_links($links) {
+		$support_link = '<a href="https://tinylab.dev/support/" target="_blank" rel="noopener noreferrer" style="color: green;">Get Support</a>';
+		
+		array_push($links, $support_link);
+		return $links;
+	}
+    
 }
 
 new Add_To_Cart_Button_Rules();
