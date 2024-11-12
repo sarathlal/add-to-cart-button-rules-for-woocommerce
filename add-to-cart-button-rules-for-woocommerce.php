@@ -89,3 +89,12 @@ class Add_To_Cart_Button_Rules {
 }
 
 new Add_To_Cart_Button_Rules();
+
+add_action( 'before_woocommerce_init', 'acbrw_before_woocommerce_init_hpos' ) ;
+
+function acbrw_before_woocommerce_init_hpos() {
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+}
+
